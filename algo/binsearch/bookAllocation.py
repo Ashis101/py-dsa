@@ -9,7 +9,8 @@ def isPossible(A,N,M,MID):
             stunt_count+=1
             if(stunt_count > M or A[i] > MID):
                 return False
-            page_sum=A[i]
+            page_sum=0
+            page_sum+=A[i]
 
 
     return True

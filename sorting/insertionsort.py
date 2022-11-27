@@ -12,3 +12,4 @@ def insertion(l):
             j=j-1
         l[j+1]=x
     
+    

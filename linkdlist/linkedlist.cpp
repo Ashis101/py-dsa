@@ -1,15 +1,17 @@
 // Online C++ compiler to run C++ program online
 #include <iostream>
-
+#include <map>
 using namespace std;
 class Node{
     public:
     int data;
     Node* next;
+    bool visited;
     
     Node(int d){
         this->data=d;
         this->next=NULL;
+        this->visited=false;
     };
 };
 
@@ -92,6 +94,68 @@ void deleteElement(Node* &head,int pos){
     
 }
 
+void detectLoop(Node* &tail){
+
+    Node* temp=tail;
+
+    bool foundLoop=false;
+
+    while (temp->next != NULL)
+    {   
+        if(temp->visited == true){
+            foundLoop=true;
+            break;
+        }
+        temp->visited=true;
+        temp=temp->next;
+    }
+    
+    cout<<"Found Loop ::"<<foundLoop<<endl;
+
+    // useing map ds make function return type bool
+    // if(tail == NULL){
+    //     return  false;
+    // }else{
+    //     map<Node*,bool> visited;
+
+    //     while (temp != NULL)
+    //     {
+    //         if(visited[temp] == true ){
+    //             return true;
+    //         }
+
+    //         visited[temp]=true;
+    //         temp=temp->next;
+    //     }
+    //     return false;
+    // }
+
+}
+
+Node* getMid(Node* head){
+    // use floyed detection algo to find mid
+    // when fast is null and in which place slow reach ,that is mid 
+
+    Node* fast=head->next;
+    Node* slow=head;
+
+    // while(fast->next->next !=NULL){
+    //     fast=fast->next->next;
+    //     slow=slow->next;
+    // }
+
+    while (fast != NULL && fast->next != NULL)
+    {
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    
+
+    Node* mid=slow;
+
+    return mid;
+
+}
 
 int main() {
     // dynamic initialization Node* means variable points to this class
@@ -104,16 +168,29 @@ int main() {
     insertAtFirst(head,20);
     insertAtFirst(head,30);
 
-    insertAtEnd(head,50);
-    insertAtEnd(head,60);
-    insertAtEnd(head,70);
+    insertAtEnd(tail,50);
+    insertAtEnd(tail,60);
+    insertAtEnd(tail,70);
     insertInMiddle(head,55,100);
     
-    cout<<"Before delete"<<endl;
+    // getting mid
+    Node* mid=getMid(head);
+    cout<<"Getting Mid::"<< mid->data<<endl;
+    
+    // making list circular 
+    // cout<<"head::"<<head->data<<endl;
+    // cout<<"tail::"<<tail->data;
+
+    // tail->next=head->next;
+    // cout<<"Before delete"<<endl;
+    // detectLoop(head);
+
     printAll(head);
-    cout<<"After delete"<<endl;
-    deleteElement(head,3);
-    printAll(head);
+    //  if endless looop running then it prove that list is circular
+    
+    // cout<<"After delete"<<endl;
+    // deleteElement(head,3);
+    // printAll(head);
     
     
     
